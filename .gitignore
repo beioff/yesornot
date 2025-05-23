@@ -1,0 +1,8 @@
+# SSH keys
+keys
+keys.pub
+*.pem
+
+# OS files
+.DS_Store
+Thumbs.db 
