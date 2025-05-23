@@ -2,9 +2,9 @@
 const cards = [
     {
         id: 1,
-        title: "Загадка 1",
-        text: "Человек заходит в комнату и умирает. Почему?",
-        answer: "Он был в самолете, который разбился.",
+        title: "Билл и Мери",
+        text: "Жил-был парень Билл. У него была Мери, которую он очень любил. Однажды, когда Билл был в кафе, разразилась сильная гроза. Когда Билл вернулся домой, он увидел распахнутое окно и лежащую среди осколков стекла в луже воды мертвую Мери. Что произошло?",
+        answer: "Аквариум с рыбкой Мэри упал и разбился.",
         notes: []
     },
     // Добавьте больше карточек здесь
@@ -35,7 +35,13 @@ function createCard(card) {
             <h2 class="card-title">${card.title}</h2>
             <p class="card-text">${card.text}</p>
             <div class="notes-section">
-                ${card.notes.map(note => `<div class="note">${note}</div>`).join('')}
+                <div class="notes-list">
+                    ${card.notes.map(note => `<div class="note">${note}</div>`).join('')}
+                </div>
+                <div class="note-input">
+                    <input type="text" placeholder="Добавить заметку..." id="note-input-${card.id}">
+                    <button onclick="addNote(${card.id})">+</button>
+                </div>
             </div>
             <button class="show-answer-btn" onclick="toggleAnswer(${card.id})">Показать ответ</button>
             <div class="answer" id="answer-${card.id}">
@@ -54,11 +60,17 @@ function toggleAnswer(cardId) {
 }
 
 // Функция для добавления заметки
-function addNote(cardId, note) {
-    const card = cards.find(c => c.id === cardId);
-    if (card) {
-        card.notes.push(note);
-        updateCard(cardId);
+function addNote(cardId) {
+    const input = document.getElementById(`note-input-${cardId}`);
+    const note = input.value.trim();
+    
+    if (note) {
+        const card = cards.find(c => c.id === cardId);
+        if (card) {
+            card.notes.push(note);
+            input.value = '';
+            updateCard(cardId);
+        }
     }
 }
 
