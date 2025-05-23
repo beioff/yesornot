@@ -45,10 +45,21 @@ const swiper = new Swiper('.swiper', {
         el: '.swiper-pagination',
         clickable: true
     },
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
     effect: 'cards',
     cardsEffect: {
         perSlideOffset: 8,
         perSlideRotate: 2,
+    },
+    grabCursor: true,
+    keyboard: {
+        enabled: true,
+    },
+    mousewheel: {
+        enabled: true,
     }
 });
 
@@ -76,6 +87,13 @@ function createCard(card) {
             </div>
         </div>
     `;
+    
+    // Добавляем обработчик клика для раскрытия карточки
+    slide.addEventListener('click', (e) => {
+        if (!e.target.closest('.show-answer-btn') && !e.target.closest('.note-input')) {
+            slide.classList.toggle('expanded');
+        }
+    });
     
     return slide;
 }
